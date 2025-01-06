@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import HealingIcon from '@mui/icons-material/Healing';
+import DescriptionIcon from '@mui/icons-material/Description'; // Ícone para Relatórios
 
 const drawerWidth = 250;
 
@@ -156,6 +157,29 @@ const Sidebar = () => {
             <EventNoteIcon />
           </ListItemIcon>
           <ListItemText primary="Agendamento" sx={{ fontSize: '18px', color: '#333' }} />
+        </ListItem>
+
+        {/* Relatórios */}
+        <ListItem
+          button
+          component={Link}
+          to="/relatorios"
+          sx={{
+            '&:hover': {
+              bgcolor: '#FFD700',
+              borderRadius: '12px',
+            },
+            padding: '14px 24px',
+            marginBottom: '12px',
+            borderRadius: '12px',
+            backgroundColor: '#F9F9F9',
+            transition: 'background-color 0.3s ease',
+          }}
+        >
+          <ListItemIcon sx={{ color: '#333', minWidth: '40px' }}>
+            <DescriptionIcon />
+          </ListItemIcon>
+          <ListItemText primary="Relatórios" sx={{ fontSize: '18px', color: '#333' }} />
         </ListItem>
       </List>
     </Drawer>
