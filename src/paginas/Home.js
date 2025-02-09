@@ -83,10 +83,7 @@ const Home = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '40px' }}>
         
         {/* Gráfico de Barras */}
-        <Box sx={{ width: '48%', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-            Gráfico de Atendimentos e Estoque (Barras)
-          </Typography>
+        <Box sx={{ width: '48%', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: '8px', marginLeft: '10px' }}>
           <Bar
             data={barData}
             options={{
@@ -159,9 +156,6 @@ const Home = () => {
 
         {/* Gráfico de Pizza */}
         <Box sx={{ width: '48%', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-            Distribuição de Atendimentos, Estoque e Outros
-          </Typography>
           <Pie
             data={pieData}
             options={{
@@ -169,7 +163,7 @@ const Home = () => {
               plugins: {
                 title: {
                   display: true,
-                  text: 'Distribuição geral entre as categorias',
+                  text: '  Distribuição de Atendimentos, Estoque e Outros',
                   font: { size: 20, weight: 'bold' },
                   color: '#333',
                 },

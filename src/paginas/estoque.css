@@ -1,0 +1,84 @@
+/* estoque.css */
+.dashboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 30px;
+    background-color: #f4f7fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .charts {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .chart {
+    width: 48%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 300px; /* Ajuste a altura dos gráficos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .chart-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .btn-primary {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-secondary {
+    background-color: #2196F3;
+    color: #fff;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #1976d2;
+  }
+  
+  .btn-tertiary {
+    background-color: #FF5722;
+    color: #fff;
+  }
+  
+  .btn-tertiary:hover {
+    background-color: #e64a19;
+  }
+  

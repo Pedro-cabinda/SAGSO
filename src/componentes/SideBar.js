@@ -94,7 +94,7 @@ const Sidebar = () => {
         <ListItem
           button
           component={Link}
-          to="/atendimento"
+          to="/atendimentos"
           sx={{
             '&:hover': {
               bgcolor: '#FFD700',

@@ -1,0 +1,231 @@
+/* Estilos gerais */
+.atendimentos {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+  }
+  
+  .atendimentos-title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Filtros */
+  .filtros {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .filtros input {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 30%;
+  }
+  
+  .filtros input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  /* Modal de Formulário */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 450px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  input[type="datetime-local"] {
+    font-size: 0.9rem;
+  }
+  
+  textarea {
+    height: 120px;
+  }
+  
+  textarea:focus, input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaçamento entre os botões */
+  }
+  
+  .btn-close {
+    padding: 12px 20px;
+    background-color: #db3d3d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .btn-success {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  
+  .btn-close:hover, .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    padding: 12px 20px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Tabela */
+  .atendimentos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .atendimentos-table th, .atendimentos-table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #f1f1f1;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .atendimentos-table th {
+    background-color: #007bff; /* Cabeçalho azul */
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .atendimentos-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .atendimentos-list {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .atendimentos-list.faded {
+    opacity: 0.5;
+  }
+  
+  /* Relatórios */
+  .relatorios {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .relatorios h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .relatorios .relatorio-cards {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .relatorio-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .relatorio-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .relatorio-card p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  .relatorio-card svg {
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .relatorios .relatorio-cards div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+  }
+  
+  /* Gráficos */
+  .chart-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
