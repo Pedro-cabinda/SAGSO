@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Typography, Box, Grid, Paper, Button, Snackbar, IconButton, Badge, Tooltip, Drawer, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Container, Typography, Box, Grid, Paper, Button, Snackbar, IconButton, Badge, Tooltip, Drawer, List, ListItem, ListItemText, Divider, Avatar } from '@mui/material';
 import { Bar, Pie, Line } from 'react-chartjs-2';
+import { useNavigate } from 'react-router-dom'; // Importar o useNavigate
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, Title, Tooltip as ChartTooltip, Legend, ArcElement, PointElement } from 'chart.js';
 import { Assessment, PendingActions, TrendingDown, Close, Notifications, Delete, CheckCircle } from '@mui/icons-material';
 import { jsPDF } from 'jspdf';
@@ -17,6 +18,7 @@ const Dashboard = () => {
   ]);
   const [notificacao, setNotificacao] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate(); // Usar o useNavigate
 
   const handleExcluirNotificacao = (index) => {
     setAlertasExames((prev) => prev.filter((_, i) => i !== index));
@@ -36,8 +38,22 @@ const Dashboard = () => {
     doc.save('relatorio.pdf');
   };
 
+  const handleLogout = () => {
+    // Aqui você pode limpar o token/sessão se necessário
+    navigate('/login'); // Redireciona para a página de login
+  };
+
   return (
     <Container>
+      <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2, mb: 2 }}>
+        <Tooltip title="Perfil">
+          <IconButton>
+            <Avatar alt="Foto do Usuário" src="/path/to/profile.jpg" />
+          </IconButton>
+        </Tooltip>
+        <Button onClick={handleLogout} variant="outlined" sx={{ marginLeft: 2 }}>Logout</Button> {/* Botão de Logout */}
+      </Box>
+
       <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2, mb: 2 }}>
         <Tooltip title="Alertas de Exames">
           <IconButton onClick={() => setDrawerOpen(true)}>

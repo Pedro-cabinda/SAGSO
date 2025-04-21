@@ -1,31 +1,32 @@
-// Arquivo App.js
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Box, CssBaseline, Toolbar } from '@mui/material';
-import Sidebar from './componentes/SideBar';
+import LayoutPadrao from './componentes/LayoutPadrao';
 import Home from './paginas/Home';
-import Atendimento from './paginas/Atendimento';
+import Atendimentos from './paginas/Atendimento';
 import Estoque from './paginas/Estoque';
 import Agendamento from './paginas/Agendamento';
+import Relatorios from './paginas/Relatorios';
+import Login from './paginas/Login';
+import RotaPrivada from './componentes/RotaPrivada'; // importar aqui
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-          <Toolbar />
-          <Routes>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+
+        {/* Rota protegida */}
+        <Route element={<RotaPrivada />}>
+          <Route element={<LayoutPadrao />}>
             <Route path="/" element={<Home />} />
-            <Route path="/atendimentos" element={<Atendimento />} />
+            <Route path="/atendimentos" element={<Atendimentos />} />
             <Route path="/estoque" element={<Estoque />} />
             <Route path="/agendamento" element={<Agendamento />} />
-          </Routes>
-        </Box>
-      </Box>
+            <Route path="/relatorios" element={<Relatorios />} />
+          </Route>
+        </Route>
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;
