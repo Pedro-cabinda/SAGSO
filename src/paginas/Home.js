@@ -40,7 +40,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     // Aqui você pode limpar o token/sessão se necessário
-    navigate('/login'); // Redireciona para a página de login
+    navigate('/'); // Redireciona para a página de login
   };
 
   return (

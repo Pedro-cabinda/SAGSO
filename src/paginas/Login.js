@@ -52,7 +52,7 @@ const Login = () => {
       setTimeout(() => {
         if (usuario === 'admin' && senha === '1234') {
           localStorage.setItem('token', 'usuarioAutenticado'); // ← ADICIONAR ESTA LINHA
-          navigate('/'); // ← troque para apenas /
+          navigate('/home'); // ← troque para apenas /
         }
          else {
           setMensagemNotificacao('Usuário ou senha inválidos!');

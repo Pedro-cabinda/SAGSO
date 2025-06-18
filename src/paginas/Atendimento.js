@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaChartBar, FaMedkit, FaHeartbeat, FaUserMd } from 'react-icons/fa';
+import { FaChartBar, FaMedkit, FaHeartbeat } from 'react-icons/fa';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import '../paginas/atendimento.css';
@@ -12,6 +12,7 @@ const Atendimentos = () => {
   const [filtroProfissional, setFiltroProfissional] = useState('');
   const [filtroDiagnostico, setFiltroDiagnostico] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [atendimentoEditando, setAtendimentoEditando] = useState(null);
   const [novoAtendimento, setNovoAtendimento] = useState({
     paciente: '',
     dataHora: '',
@@ -20,6 +21,14 @@ const Atendimentos = () => {
     medicamentos: '',
     profissional: ''
   });
+
+  const profissionaisDisponiveis = [
+    'Dr. Carlos Pereira',
+    'Dra. Ana Souza',
+    'Dr. João Almeida',
+    'Dra. Patrícia Santos',
+    'Dr. Miguel António',
+  ];
 
   useEffect(() => {
     const dadosAtendimentos = [
@@ -35,46 +44,80 @@ const Atendimentos = () => {
       const dataValida = filtroData ? atendimento.dataHora.includes(filtroData) : true;
       const profissionalValido = filtroProfissional ? atendimento.profissional.toLowerCase().includes(filtroProfissional.toLowerCase()) : true;
       const diagnosticoValido = filtroDiagnostico ? atendimento.diagnostico.toLowerCase().includes(filtroDiagnostico.toLowerCase()) : true;
-
       return dataValida && profissionalValido && diagnosticoValido;
     });
   };
 
-  const contarAtendimentosPorPeriodo = () => {
-    return filtrarAtendimentos().length;
-  };
+  const contarAtendimentosPorPeriodo = () => filtrarAtendimentos().length;
 
   const contarSintomasMaisComuns = () => {
     const sintomas = filtrarAtendimentos().map((atendimento) => atendimento.sintomas);
-    const contagemSintomas = {};
-    sintomas.forEach((sintoma) => {
-      contagemSintomas[sintoma] = contagemSintomas[sintoma] ? contagemSintomas[sintoma] + 1 : 1;
-    });
-    return contagemSintomas;
+    const contagem = {};
+    sintomas.forEach((s) => contagem[s] = contagem[s] ? contagem[s] + 1 : 1);
+    return contagem;
   };
 
   const contarMedicamentosMaisUsados = () => {
     const medicamentos = filtrarAtendimentos().map((atendimento) => atendimento.medicamentos);
-    const contagemMedicamentos = {};
-    medicamentos.forEach((medicamento) => {
-      contagemMedicamentos[medicamento] = contagemMedicamentos[medicamento] ? contagemMedicamentos[medicamento] + 1 : 1;
-    });
-    return contagemMedicamentos;
+    const contagem = {};
+    medicamentos.forEach((m) => contagem[m] = contagem[m] ? contagem[m] + 1 : 1);
+    return contagem;
   };
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
+    setNovoAtendimento({
+      paciente: '',
+      dataHora: '',
+      sintomas: '',
+      diagnostico: '',
+      medicamentos: '',
+      profissional: ''
+    });
+    setAtendimentoEditando(null);
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const novoId = atendimentos.length + 1;
-    const atendimento = { ...novoAtendimento, id: novoId };
-    setAtendimentos([...atendimentos, atendimento]);
+
+    if (atendimentoEditando !== null) {
+      const atualizados = atendimentos.map((item) =>
+        item.id === atendimentoEditando ? { ...novoAtendimento, id: atendimentoEditando } : item
+      );
+      setAtendimentos(atualizados);
+      setAtendimentoEditando(null);
+    } else {
+      const novoId = atendimentos.length + 1;
+      const atendimento = { ...novoAtendimento, id: novoId };
+      setAtendimentos([...atendimentos, atendimento]);
+    }
+
+    setNovoAtendimento({
+      paciente: '',
+      dataHora: '',
+      sintomas: '',
+      diagnostico: '',
+      medicamentos: '',
+      profissional: ''
+    });
+
     setIsFormVisible(false);
   };
 
-  // Configuração dos gráficos
+  const handleEditar = (atendimento) => {
+    setNovoAtendimento(atendimento);
+    setAtendimentoEditando(atendimento.id);
+    setIsFormVisible(true);
+  };
+
+  const handleEliminar = (id) => {
+    const confirmar = window.confirm("Deseja realmente eliminar este atendimento?");
+    if (confirmar) {
+      const atualizados = atendimentos.filter((item) => item.id !== id);
+      setAtendimentos(atualizados);
+    }
+  };
+
   const sintomasChartData = {
     labels: Object.keys(contarSintomasMaisComuns()),
     datasets: [
@@ -97,21 +140,12 @@ const Atendimentos = () => {
     ],
   };
 
-  // Opções de configuração dos gráficos
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false, // Permite o gráfico ajustar a altura e largura
+    maintainAspectRatio: false,
     scales: {
-      x: {
-        ticks: {
-          font: { size: 10 }, // Tamanho da fonte dos ticks no eixo X
-        },
-      },
-      y: {
-        ticks: {
-          font: { size: 10 }, // Tamanho da fonte dos ticks no eixo Y
-        },
-      },
+      x: { ticks: { font: { size: 10 } } },
+      y: { ticks: { font: { size: 10 } } },
     },
   };
 
@@ -119,35 +153,44 @@ const Atendimentos = () => {
     <div className="atendimentos">
       <h1 className="atendimentos-title">Gestão de Atendimentos</h1>
 
-      {/* Filtros */}
       <div className="filtros">
-        <input type="date" value={filtroData} onChange={(e) => setFiltroData(e.target.value)} placeholder="Filtrar por data" />
+        <input type="date" value={filtroData} onChange={(e) => setFiltroData(e.target.value)} />
         <input type="text" value={filtroProfissional} onChange={(e) => setFiltroProfissional(e.target.value)} placeholder="Filtrar por profissional" />
         <input type="text" value={filtroDiagnostico} onChange={(e) => setFiltroDiagnostico(e.target.value)} placeholder="Filtrar por diagnóstico" />
       </div>
 
-      {/* Modal de Formulário */}
       {isFormVisible && (
         <div className="modal-overlay">
           <div className="form-container">
-            <h2 className="form-title">Cadastrar Atendimento</h2>
+            <h2 className="form-title">{atendimentoEditando ? 'Editar Atendimento' : 'Cadastrar Atendimento'}</h2>
             <form onSubmit={handleFormSubmit}>
               <input type="text" value={novoAtendimento.paciente} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, paciente: e.target.value })} placeholder="Nome do paciente" required />
               <input type="datetime-local" value={novoAtendimento.dataHora} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, dataHora: e.target.value })} required />
               <textarea value={novoAtendimento.sintomas} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, sintomas: e.target.value })} placeholder="Sintomas" required />
               <input type="text" value={novoAtendimento.diagnostico} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, diagnostico: e.target.value })} placeholder="Diagnóstico" required />
               <input type="text" value={novoAtendimento.medicamentos} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, medicamentos: e.target.value })} placeholder="Medicamentos/Procedimentos" required />
-              <input type="text" value={novoAtendimento.profissional} onChange={(e) => setNovoAtendimento({ ...novoAtendimento, profissional: e.target.value })} placeholder="Profissional" required />
+
+              <select
+                className="select-profissional"
+                value={novoAtendimento.profissional}
+                onChange={(e) => setNovoAtendimento({ ...novoAtendimento, profissional: e.target.value })}
+                required
+              >
+                <option value="">Selecione o profissional</option>
+                {profissionaisDisponiveis.map((prof, index) => (
+                  <option key={index} value={prof}>{prof}</option>
+                ))}
+              </select>
+
               <div className="buttons">
                 <button type="button" className="btn-close" onClick={toggleFormVisibility}>Fechar</button>
-                <button type="submit" className="btn-success">Cadastrar Atendimento</button>
+                <button type="submit" className="btn-success">{atendimentoEditando ? 'Atualizar' : 'Cadastrar'}</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Lista de Atendimentos */}
       <div className={`atendimentos-list ${isFormVisible ? 'faded' : ''}`}>
         <h2 className="list-title">Histórico de Atendimentos</h2>
         <table className="atendimentos-table">
@@ -159,6 +202,7 @@ const Atendimentos = () => {
               <th>Diagnóstico</th>
               <th>Medicamentos</th>
               <th>Profissional</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -170,19 +214,21 @@ const Atendimentos = () => {
                 <td>{atendimento.diagnostico}</td>
                 <td>{atendimento.medicamentos}</td>
                 <td>{atendimento.profissional}</td>
+                <td>
+                  <button className="btn-editar" onClick={() => handleEditar(atendimento)}>Editar</button>
+                  <button className="btn-eliminar" onClick={() => handleEliminar(atendimento.id)}>Eliminar</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        {/* Botões abaixo da tabela */}
         <div className="buttons">
           <button className="btn-success">Gerar Relatório</button>
           <button className="btn-primary" onClick={toggleFormVisibility}>Cadastrar Atendimento</button>
         </div>
       </div>
 
-      {/* Relatórios e Estatísticas */}
       <div className="relatorios">
         <h2>Relatórios e Estatísticas</h2>
         <div className="relatorio-cards">
@@ -190,7 +236,6 @@ const Atendimentos = () => {
             <FaChartBar size={50} />
             <p><strong>Quantidade de Atendimentos:</strong> {contarAtendimentosPorPeriodo()}</p>
           </div>
-
           <div className="relatorio-card">
             <FaHeartbeat size={80} />
             <h3>Sintomas Mais Comuns</h3>
@@ -198,7 +243,6 @@ const Atendimentos = () => {
               <Bar data={sintomasChartData} options={chartOptions} />
             </div>
           </div>
-
           <div className="relatorio-card">
             <FaMedkit size={80} />
             <h3>Medicamentos Mais Usados</h3>
