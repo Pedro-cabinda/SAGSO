@@ -37,3 +37,12 @@ exports.login = async (req, res) => {
     res.status(500).json({ erro: 'Erro no login' });
   }
 };
+
+exports.listarProfissionais = async (req, res) => {
+  try {
+    const profissionais = await Usuario.listarProfissionais();
+    res.json(profissionais);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar profissionais' });
+  }
+};

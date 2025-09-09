@@ -14,7 +14,7 @@ function autenticarToken(req, res, next) {
       return res.status(403).json({ mensagem: 'Token inválido' });
     }
 
-    req.usuario = usuario; // adiciona os dados do usuário na requisição
+    req.usuario = { id: usuario.id, nome: usuario.nome };
     next();
   });
 }

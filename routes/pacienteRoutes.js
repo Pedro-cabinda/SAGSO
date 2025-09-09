@@ -5,9 +5,14 @@ const autenticar = require('../middlewares/authMiddleware');
 
 router.use(autenticar); // proteger todas as rotas
 
-router.post('/', controller.criar);
-router.get('/', controller.listar);
+// Rotas específicas primeiro
+router.get('/funcionarios', controller.getFuncionarios);
+router.get('/matricula/:numero', controller.buscarPorMatricula);
 router.get('/:id', controller.buscarPorId);
+
+// Rotas gerais
+router.get('/', controller.listar);
+router.post('/', controller.criar);
 router.put('/:id', controller.atualizar);
 router.delete('/:id', controller.excluir);
 

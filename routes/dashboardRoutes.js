@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const dashboardController = require('../controllers/dashboardController');
 const autenticar = require('../middlewares/authMiddleware');
 
-router.get('/painel', autenticar, (req, res) => {
-  res.json({ mensagem: `Bem-vindo ao painel, ${req.usuario.tipo}` });
-});
+router.get('/estatisticas', autenticar, dashboardController.obterEstatisticas);
 
 module.exports = router;
